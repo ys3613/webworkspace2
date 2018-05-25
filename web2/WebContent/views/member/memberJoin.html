@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<fieldset>
+<legend>회원가입</legend>
+<form action="/joinus" method="post">
+	ID : <input type="text" name="userId">
+	<button type="button" onclick="check();">ID 중복체크</button><br>
+	PW : <input type="password" name="userPwd"><br>
+	PW_re : <input type="password" name="userPwd_re"><br>
+	Name : <input type="text" name="userName"><br>
+	Age : <input type="text" name="userAge"><br>
+	Email : <input type="email" name="email"><br>
+	Phone : <input type="text" name="phone"><br>
+	Addr : <input type="text" name="userAddr"><br>
+	Gender : <input type="radio" name="gender" value="M">남
+			<input type="radio" name="gender" value="F">여<br>
+	Hobby : <input type="text" name="hobby"><br>
+	
+	<input type="submit" value="회원가입">
+	<button type="button" onclick="back();">돌아가기</button>
+</form>
+</fieldset>
+
+<script type="text/javascript">
+function back() {
+	history.go(-1);
+}
+</script>
+</body>
+</html>
