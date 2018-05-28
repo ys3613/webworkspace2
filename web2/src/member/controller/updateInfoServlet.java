@@ -6,23 +6,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 
 import member.model.service.memberService;
 import member.model.vo.member;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class updateInfoServlet
  */
-@WebServlet("/Login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/updateinfo")
+public class updateInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public updateInfoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,48 +28,31 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("null")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		member m = null;
-		// 1. 전송값에 한글이 있을 경우를 처리할 수 있도록 인코딩 처리
+		member m = new member();
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		// 2. View엣 전송한 데이터를 받아 변수에 저장
-		String Id = request.getParameter("userId");
-		String Pw = request.getParameter("userPw");
-		// 3. 비즈니스 로직 처리(Controller -> Service -> Dao -> DB 처리후 리턴)
-		m = new memberService().selectOne(Id,Pw);
-		// 4. 처리 결과에 따라 성공/실패 페이지 리턴
-		if(m != null)
+		m.setUserId(request.getParameter("userId"));
+		m.setUserPwd(request.getParameter("userPwd"));
+		m.setName(request.getParameter("userName"));
+		m.setAge(Integer.parseInt(request.getParameter("userAge")));
+		m.setEmail(request.getParameter("email"));
+		m.setPhone(request.getParameter("phone"));
+		m.setGender(request.getParameter("gender"));
+		m.setHobby(request.getParameter("hobby"));
+		m.setAddr(request.getParameter(""));
+		m.setActivation("Y");
+		
+		int result = new memberService().updateInfo(m);
+		if(result==1)
 		{
-			if(m.getActivation().equals("N") && !m.getUserId().equals("admin"))
-			{
-				m = null;
-				response.sendRedirect("/views/member/loginNoActivation.jsp");
-			}
-			else if(m.getActivation().equals("Y")|| m.getUserId().equals("admin"))
-			{
-				int result = new memberService().changePwdCheck(Id);
-				System.out.println(result);
-			HttpSession session = request.getSession();
-			session.setAttribute("login", m);
-			if(result >= 90)
-			{
-				response.sendRedirect("/views/member/passwordChange.jsp");
-			}
-			else 
-			{
 			response.sendRedirect("/views/member/loginSucces.jsp");
-			}
-			}
 		}
 		else
 		{
 			response.sendRedirect("/views/member/loginFail.jsp");
 		}
-		
 	}
 
 	/**

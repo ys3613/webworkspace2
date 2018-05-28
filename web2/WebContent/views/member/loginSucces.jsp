@@ -19,6 +19,9 @@
 	function myInfo() {
 		document.getElementById("myInfo").style="display:inline";
 	}
+	function deletemember() {
+		document.getElementById("deletemember").style="display:inline";
+	}
 </script>
 <center>
 <h1>로그인 성공</h1><br>
@@ -31,10 +34,17 @@
 <input type="submit" value="확인">
 </form>
 <a href="/logout">로그아웃</a><br>
-<a href="">회원탈퇴</a><br>
+<label onclick="deletemember();" id="infoBtn">회원탈퇴</label>
+<form action="/deletemember" method="post" style="display:none;" id="deletemember">
+<label style="color:red;">비밀번호 입력 :</label>
+<input type="password" name="userPwd">
+<input type="submit" value="확인">
+</form>
 <%if(m.getUserId().equals("admin")){%>
 <a href="/allmember">전체회원조회</a>
 <%}%>
 </center>
+<br>
+<a href="/notice">공지사항</a>
 </body>
 </html>

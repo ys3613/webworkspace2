@@ -13,7 +13,7 @@
 <body>
 <fieldset>
 <legend>회원 가입 정보</legend>
-<form action="" method="post">
+<form action="/updateinfo" method="post">
 	ID : <input type="text" name="userId" value=<%= m.getUserId() %>><br>
 	PW : <input type="password" name="userPwd" value=<%= m.getUserPwd() %>><br>
 	PW_re : <input type="password" name="userPwd_re" value=<%= m.getUserPwd() %>><br>

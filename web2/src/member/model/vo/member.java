@@ -26,6 +26,7 @@ ENROLLDATE	DATE
 	private String hobby;
 	private Date enrolldate;
 	private String activation;
+	private Date last_modified;
 	
 	public String getUserId() {
 		return userId;
@@ -92,6 +93,12 @@ ENROLLDATE	DATE
 	}
 	public void setActivation(String activation) {
 		this.activation = activation;
+	}
+	public Date getLast_modified() {
+		return last_modified;
+	}
+	public void setLast_modified(Date last_modified) {
+		this.last_modified = last_modified;
 	}
 	
 }

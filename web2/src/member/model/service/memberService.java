@@ -54,4 +54,37 @@ public class memberService {
 		return result;
 	}
 
+	public int updateInfo(member m) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		int result =0;
+		conn = JDBCTemplate.connection(conn);
+		result = new memberDao().updateInfo(conn, m);
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int deleteMember(String userId, String userPwd) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		int result =0;
+		conn = JDBCTemplate.connection(conn);
+		result = new memberDao().deleteMember(conn, userId, userPwd);
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
+	public int changePwdCheck(String id) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		int result =0;
+		conn = JDBCTemplate.connection(conn);
+		result = new memberDao().changePwdCheck(conn, id);
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
+
 }
