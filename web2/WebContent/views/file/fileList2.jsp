@@ -20,8 +20,8 @@
 <%for(DataFile2 df : list){ %>
 <tr>
 <td><%= df.getBeforeFileName() %></td><td><%= df.getFileSize() %></td><td><%= df.getFileUser() %></td><td><%= df.getUploadTime() %></td>
-<td><form action="/fileDown" method="post">
-<input type="hidden" name="beforefileName" value="<%= df.getBeforeFileName() %>">
+<td><form action="/fileDown2" method="post">
+<input type="hidden" name="beforeFileName" value="<%= df.getBeforeFileName() %>">
 <input type="hidden" name="uploadTime" value="<%= df.getUploadTime() %>">
 <input class="btn btn-default" type="submit" value="다운로드"></form></td>
 <td><form action="/fileRemove" method="post"><input class="btn btn-default" type="submit" value="파일삭제"></form></td>

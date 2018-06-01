@@ -90,4 +90,13 @@ public class FileService {
 		JDBCTemplate.close(conn);
 		return list;
 	}
+
+	public DataFile2 fileSelectDownload2(String beforeFileName, Timestamp uploadTime) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		conn = JDBCTemplate.connection(conn);
+		DataFile2 df = new FileDao().fileSelectDownload2(conn,beforeFileName, uploadTime);
+		JDBCTemplate.close(conn);
+		return df;
+	}
 }

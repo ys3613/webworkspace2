@@ -1,7 +1,6 @@
-package file.controller;
+package member.model.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,21 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import file.model.service.FileService;
-import file.model.vo.DataFile;
-import file.model.vo.DataFile2;
+import member.model.vo.Member;
 
 /**
- * Servlet implementation class FileListServlet
+ * Servlet implementation class useBeanServlet
  */
-@WebServlet("/filelist2")
-public class FileList2Servlet extends HttpServlet {
+@WebServlet("/useBean")
+public class useBeanServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FileList2Servlet() {
+    public useBeanServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,19 +33,10 @@ public class FileList2Servlet extends HttpServlet {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.setCharacterEncoding("UTF-8");
-		ArrayList<DataFile2> list = new FileService().selectAll2();
-		
-		if(!list.isEmpty())
-		{
-			RequestDispatcher view = request.getRequestDispatcher("/views/file/fileList2.jsp");
-			request.setAttribute("list", list);
-			view.forward(request, response);
-		}
-		else
-		{
-			response.sendRedirect("/views/file/uploadError.html");
-		}
-		
+		Member m = new Member("김말똥",30,"서울시");
+		RequestDispatcher view = request.getRequestDispatcher("/views/action/jsp_useBean2.jsp");
+		request.setAttribute("list", m);
+		view.forward(request, response);
 	}
 
 	/**

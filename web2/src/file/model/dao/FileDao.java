@@ -155,13 +155,14 @@ public class FileDao {
 			
 			while(rset.next())
 			{
-				DataFile2 df = new DataFile2();
-				df.setBeforeFileName(rset.getString("beforefilename"));
+				DataFile2 df2 = new DataFile2();
+				df2.setBeforeFileName(rset.getString("beforefilename"));
+				df2.setAfterFileName(rset.getString("afterfilename"));
 //				df.setFilePath(rset.getString("filepath"));
-				df.setFileSize(rset.getLong("filesize"));
-				df.setFileUser(rset.getString("fileuser"));
-				df.setUploadTime(rset.getTimestamp("uploadtime"));
-				list.add(df);
+				df2.setFileSize(rset.getLong("filesize"));
+				df2.setFileUser(rset.getString("fileuser"));
+				df2.setUploadTime(rset.getTimestamp("uploadtime"));
+				list.add(df2);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -171,6 +172,36 @@ public class FileDao {
 			JDBCTemplate.close(stmt);
 		}
 		return list;
+	}
+
+	public DataFile2 fileSelectDownload2(Connection conn, String beforeFileName, Timestamp uploadTime) {
+		// TODO Auto-generated method stub
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String query = "select* from filetbl2 where beforeFileName=? and uploadTime=?";
+		DataFile2 df = null;
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, beforeFileName);
+			pstmt.setTimestamp(2, uploadTime);
+			rset = pstmt.executeQuery();
+			if(rset.next())
+			{
+				df = new DataFile2();
+				df.setBeforeFileName(rset.getString("beforefilename"));
+				df.setFilePath(rset.getString("filepath"));
+				df.setFileSize(rset.getLong("filesize"));
+				df.setFileUser(rset.getString("fileuser"));
+				df.setUploadTime(rset.getTimestamp("uploadtime"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+//			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return df;
 	}
 
 }

@@ -1,7 +1,8 @@
-package file.controller;
+package member.model.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,21 +11,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import file.model.service.FileService;
-import file.model.vo.DataFile;
-import file.model.vo.DataFile2;
+import member.model.vo.Member;
 
 /**
- * Servlet implementation class FileListServlet
+ * Servlet implementation class EL_Test1Servlet
  */
-@WebServlet("/filelist2")
-public class FileList2Servlet extends HttpServlet {
+@WebServlet("/el_test3")
+public class EL_Test3Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FileList2Servlet() {
+    public EL_Test3Servlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,20 +34,18 @@ public class FileList2Servlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.setCharacterEncoding("UTF-8");
-		ArrayList<DataFile2> list = new FileService().selectAll2();
 		
-		if(!list.isEmpty())
-		{
-			RequestDispatcher view = request.getRequestDispatcher("/views/file/fileList2.jsp");
-			request.setAttribute("list", list);
-			view.forward(request, response);
-		}
-		else
-		{
-			response.sendRedirect("/views/file/uploadError.html");
-		}
+//		HashMap<String, Member> map = new HashMap<String,Member>();
+//		map.put("member1",new Member("홍길동",20,"경기도"));
+//		map.put("member2",new Member("김말똥",30,"서울시"));
 		
+		ArrayList<Member> list = new ArrayList<Member>();
+		list.add(new Member("홍길동",20,"경기도"));
+		list.add(new Member("김말똥",30,"서울시"));
+	
+		RequestDispatcher view = request.getRequestDispatcher("/views/el/el_test3.jsp");
+		request.setAttribute("members", list);
+		view.forward(request, response);
 	}
 
 	/**
