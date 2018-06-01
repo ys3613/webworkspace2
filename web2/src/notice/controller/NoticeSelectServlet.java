@@ -3,6 +3,7 @@ package notice.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,19 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import notice.model.service.NoticeService;
 import notice.model.vo.Notice;
-import notice.model.vo.PageData;
+import notice.model.vo.NoticeComment;
 
 /**
- * Servlet implementation class NoticeServlet
+ * Servlet implementation class NoticeSelectServlet
  */
-@WebServlet("/notice")
-public class NoticeServlet extends HttpServlet {
+@WebServlet("/noticeSelect")
+public class NoticeSelectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeServlet() {
+    public NoticeSelectServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,39 +36,21 @@ public class NoticeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.setCharacterEncoding("UTF-8");
-		String currentPage = request.getParameter("currentPage");
-		String searchPage = request.getParameter("searchPage");
-		System.out.println(searchPage);
-		PageData pd = null;
-		if(searchPage == null)
-		{
-			System.out.println("null이다");
-			if(request.getParameter("currentPage")==null) 
-				currentPage="1";
-			pd = new NoticeService().noticeAll(Integer.parseInt(currentPage));
-			
-		}
-		else
-		{
-			System.out.println("null이 아니다");
-			if(request.getParameter("currentPage")==null) 
-				currentPage="1";
-			pd = new NoticeService().noticeAll(Integer.parseInt(currentPage),searchPage);
-		}
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
 		
-		
-		if(pd!=null)
+		Notice n = new NoticeService().noticeSelect(noticeNo);
+		ArrayList<NoticeComment> list = new NoticeService().noticeComment(noticeNo);	// 댓글
+		if(n != null)
 		{
-			RequestDispatcher view = request.getRequestDispatcher("/views/notice/notice.jsp");
-			request.setAttribute("pageData", pd);
+			RequestDispatcher view = request.getRequestDispatcher("/views/notice/noticeSelect.jsp");
+			request.setAttribute("notice", n);
+			request.setAttribute("comment", list);
 			view.forward(request, response);
 		}
 		else
 		{
-			response.sendRedirect("/views/notice/Error.html");
+			response.sendRedirect("/views/notice/Error.jsp");
 		}
-		
 	}
 
 	/**

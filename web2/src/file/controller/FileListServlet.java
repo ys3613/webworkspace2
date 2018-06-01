@@ -1,4 +1,4 @@
-package notice.controller;
+package file.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import notice.model.service.NoticeService;
-import notice.model.vo.Notice;
-import notice.model.vo.PageData;
+import file.model.service.FileService;
+import file.model.vo.DataFile;
+import file.model.vo.DataFile2;
 
 /**
- * Servlet implementation class NoticeServlet
+ * Servlet implementation class FileListServlet
  */
-@WebServlet("/notice")
-public class NoticeServlet extends HttpServlet {
+@WebServlet("/filelist")
+public class FileListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeServlet() {
+    public FileListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,36 +36,17 @@ public class NoticeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.setCharacterEncoding("UTF-8");
-		String currentPage = request.getParameter("currentPage");
-		String searchPage = request.getParameter("searchPage");
-		System.out.println(searchPage);
-		PageData pd = null;
-		if(searchPage == null)
-		{
-			System.out.println("null이다");
-			if(request.getParameter("currentPage")==null) 
-				currentPage="1";
-			pd = new NoticeService().noticeAll(Integer.parseInt(currentPage));
-			
-		}
-		else
-		{
-			System.out.println("null이 아니다");
-			if(request.getParameter("currentPage")==null) 
-				currentPage="1";
-			pd = new NoticeService().noticeAll(Integer.parseInt(currentPage),searchPage);
-		}
+		ArrayList<DataFile2> list = new FileService().selectAll2();
 		
-		
-		if(pd!=null)
+		if(!list.isEmpty())
 		{
-			RequestDispatcher view = request.getRequestDispatcher("/views/notice/notice.jsp");
-			request.setAttribute("pageData", pd);
+			RequestDispatcher view = request.getRequestDispatcher("/views/file/fileList.jsp");
+			request.setAttribute("list", list);
 			view.forward(request, response);
 		}
 		else
 		{
-			response.sendRedirect("/views/notice/Error.html");
+			response.sendRedirect("/views/file/uploadError.html");
 		}
 		
 	}

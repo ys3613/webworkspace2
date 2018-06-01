@@ -22,14 +22,7 @@ PW : <Input type="text" placeholder="Pw를 입력하세요" name="userPw"><br>
 <a href="">PW 찾기</a>
 </fieldset>
 <%}else{%>
-<center>
-<h1>로그인 성공</h1><br>
-<% member m = (member)session.getAttribute("login"); %>
-<%= m.getName()%> 님 어서오세요.<br>
-<a href="/mypage">마이페이지</a><br>
-<a href="/logout">로그아웃</a><br>
-<a href="">회원탈퇴</a><br>
-</center>
+<% response.sendRedirect("/views/member/loginSucces.jsp"); %>
 <%}%>
 </body>
 </html>

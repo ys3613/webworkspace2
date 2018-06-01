@@ -1,7 +1,9 @@
 package notice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,19 +14,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import notice.model.service.NoticeService;
 import notice.model.vo.Notice;
-import notice.model.vo.PageData;
+import oracle.sql.DATE;
 
 /**
- * Servlet implementation class NoticeServlet
+ * Servlet implementation class NoticeUpdateServlet
  */
-@WebServlet("/notice")
-public class NoticeServlet extends HttpServlet {
+@WebServlet("/noticeUpdate")
+public class NoticeUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeServlet() {
+    public NoticeUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,38 +38,25 @@ public class NoticeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.setCharacterEncoding("UTF-8");
-		String currentPage = request.getParameter("currentPage");
-		String searchPage = request.getParameter("searchPage");
-		System.out.println(searchPage);
-		PageData pd = null;
-		if(searchPage == null)
-		{
-			System.out.println("null이다");
-			if(request.getParameter("currentPage")==null) 
-				currentPage="1";
-			pd = new NoticeService().noticeAll(Integer.parseInt(currentPage));
-			
-		}
-		else
-		{
-			System.out.println("null이 아니다");
-			if(request.getParameter("currentPage")==null) 
-				currentPage="1";
-			pd = new NoticeService().noticeAll(Integer.parseInt(currentPage),searchPage);
-		}
+		Notice n = new Notice();
+		n.setNoticeNo(Integer.parseInt(request.getParameter("noticeNo")));
+		n.setUserId(request.getParameter("userid"));
+		n.setSubject(request.getParameter("subject"));
+		n.setContents(request.getParameter("contents"));
 		
+		System.out.println("서브젝트 : " + request.getParameter("subject"));
+		System.out.println("콘텐 : " + request.getParameter("contents"));
 		
-		if(pd!=null)
-		{
-			RequestDispatcher view = request.getRequestDispatcher("/views/notice/notice.jsp");
-			request.setAttribute("pageData", pd);
-			view.forward(request, response);
-		}
-		else
-		{
-			response.sendRedirect("/views/notice/Error.html");
-		}
-		
+
+			int result = new NoticeService().updateNotice(n);
+			if(result ==1)
+			{
+				response.sendRedirect("/notice");
+			}
+			else
+			{
+				response.sendRedirect("/views/notice/Error.jsp");
+			}
 	}
 
 	/**

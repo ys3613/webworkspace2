@@ -19,11 +19,20 @@
 	</tr>
 <% for(Notice n : list){%>
 	<tr>
-	<td><%=n.getNoticeNo() %></td><td><%=n.getSubject() %></td><td><%=n.getContents() %></td>
+	<td><%=n.getNoticeNo() %></td><td><a href="/noticeSelect?noticeNo=<%=n.getNoticeNo() %>"><%= n.getSubject() %></a></td><td><%=n.getContents() %></td>
 	</tr>
 <%}%>
 </table>
 <%= pageNavi %>
+<br>
+<form action="/notice" method="post">
+<input type="text" name="searchPage">
+<input type="submit" value="검색"> 
+</form>
+<br>
+<form action="/views/notice/noticeWrite.jsp" style="display: inline;">
+<input type="submit" value="글쓰기">
+</form>
 </center>
 </body>
 </html>

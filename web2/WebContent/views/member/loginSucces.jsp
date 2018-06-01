@@ -16,6 +16,13 @@
 </style>
 <body>
 <script type="text/javascript">
+	window.onload = function(){
+		if(opener!=null)
+			{
+			opener.location.reload();
+			window.close();
+			}
+	}
 	function myInfo() {
 		document.getElementById("myInfo").style="display:inline";
 	}
@@ -40,6 +47,13 @@
 <input type="password" name="userPwd">
 <input type="submit" value="확인">
 </form>
+<br>
+<a href="/views/file/upload.html">업로드</a>
+<a href="/filelist">다운로드</a>
+<br>
+<a href="/views/file/upload2.html">업로드2</a>
+<a href="/filelist2">다운로드2</a>
+<br>
 <%if(m.getUserId().equals("admin")){%>
 <a href="/allmember">전체회원조회</a>
 <%}%>
