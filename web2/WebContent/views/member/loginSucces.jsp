@@ -32,7 +32,7 @@
 </script>
 <center>
 <h1>로그인 성공</h1><br>
-<% member m = (member)session.getAttribute("login"); %>
+<!--<% member m = (member)session.getAttribute("login"); %>-->
 <!-- <a href="/mypage">마이페이지</a><br> -->
 <label onclick="myInfo();" id="infoBtn">마이페이지</label>
 <form action="/mypage" method="post" style="display:none;" id="myInfo">
@@ -54,9 +54,14 @@
 <a href="/views/file/upload2.html">업로드2</a>
 <a href="/filelist2">다운로드2</a>
 <br>
+    <c:if test="${login.getUserId eq 'admin'}">
+          <a href="/allmember">전체회원조회</a>
+    </c:if>
+<!--
 <%if(m.getUserId().equals("admin")){%>
 <a href="/allmember">전체회원조회</a>
 <%}%>
+-->
 </center>
 <br>
 <a href="/notice">공지사항</a>

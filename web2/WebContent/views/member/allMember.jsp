@@ -13,19 +13,30 @@
 function prevPage() {
 	location.href="/views/member/loginSucces.jsp";
 }</script>
+<!--   <c:set var="allmember" value="${allmember}" scope="session"></c:set>-->
+<!--
 <% request.setCharacterEncoding("UTF-8");
 	ArrayList<member> list = (ArrayList<member>)request.getAttribute("allmember");%>
+-->
 	<table border="2px solid black">
 	<tr>
 	<th>ID</th><th>이름</th><th>나이</th><th>이메일</th><th>휴대폰</th><th>주소</th><th>성별</th><th>취미</th><th>가입날짜</th><th>활성여부</th>
 	</tr>
+<!--
 	<%
 	for(member m : list)
 	{%>
+-->
+    <c:forEach items="${allmember}" varStatus="allmember">
 	<tr>
-	<td><%= m.getUserId() %></td><td><%= m.getName() %></td><td><%= m.	getAge() %></td><td><%= m.getEmail() %></td>
-	<td><%= m.getPhone() %></td><td><%= m.getAddr() %></td><td><%= m.getGender() %></td><td><%= m.getHobby() %></td>
+<!--	<td><%= m.getUserId() %></td><td><%= m.getName() %></td><td><%= m.	getAge() %></td><td><%= m.getEmail() %></td>-->
+<!--
+        <td><%= m.getPhone() %></td><td><%= m.getAddr() %></td><td><%= m.getGender() %></td><td><%= m.getHobby() %></td>
 	<td><%= m.getEnrolldate() %></td>
+-->
+        <td>${allmember.getuserId}</td><td>${allmember.getName}</td><td>${allmember.getAge}</td><td>${allmember.getEmail}</td>
+        <td>${allmember.getPhone}</td><td>${allmember.getAddr}</td><td>${allmember.getGender}</td><td>${allmember.getHobby}</td>
+	<td>${allmember.getEnrolldate}</td>
 	<td>
 	<form action="/memberActivation" method="post">
 	<input type="hidden" value="<%= m.getActivation()%>" name="activation">
@@ -34,12 +45,11 @@ function prevPage() {
 	</form>
 	</td>
 	</tr>
-	<%}%>
+        </c:forEach>
+<!--	<%}%>-->
 	</table>
 	<br>
 	<button onclick="prevPage();">이전 페이지로</button>
-	
-		
 	
 </body>
 </html>
